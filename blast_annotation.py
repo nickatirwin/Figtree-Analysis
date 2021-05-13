@@ -3,19 +3,24 @@
 # Annotate sequences within a tree using protein annotations from SWISS-PROT
 #
 # Requires a BLAST output file using SWISS-PROT and -outfmt 6
-#
-# To make this:
-# 1. Download swiss-prot and unzip
-#    wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
-#    gunzip uniprot_sprot.fasta.gz
-# 2. Make a blast database
-#    makeblastdb -in uniprot_sprot.fasta -out uniprot_sprot.fasta.db -dbtype prot
-# 3. Run the blast
-#    blastp -query [your fasta file] -db uniprot_sprot.fasta.db -outfmt 6 -max_target_seqs 1 -max_hsps 1 -evalue 1e-5 -out [your fasta file].blastp
-# 4. Make the annotation file
-#    python blast_annotation.py [your fasta file] [your blast output file]
-# 5. Apply it to your phylogeny - open your phylogeny in FigTree, go to File>Import Annotations, and select your .annotation file.
-#
+
+'''
+# download swiss-prot and unzip
+wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+gunzip uniprot_sprot.fasta.gz
+
+# replace spaces with underscore so that the full annotation is included in the blast output
+sed -i 's/ /_/g' uniprot_sprot.fasta
+
+# make a blast database
+makeblastdb -in uniprot_sprot.fasta -out uniprot_sprot.fasta.db -dbtype prot
+
+# run the blast
+blastp -query proteinA.fasta -db uniprot_sprot.fasta.db -outfmt 6 -evalue 1e-5 -out proteinA.fasta.blastp
+
+python blast_annotation.py proteinA.fasta proteinA.fasta.blastp
+'''
+
 # Usage: python blast_annotation.py [fasta_file] [blast_output]
 
 import sys

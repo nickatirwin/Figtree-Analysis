@@ -4,16 +4,18 @@
 # 
 # NOTE: fasta file headers must be in the form "NCBITaxaID.ProteinID" (e.g. 9606.Q53XC5)
 #
-# REQUIREMENTS: This script requries ete3 and the NCBI taxonomy database
-#               To download:
-#                   conda install -c bioconda ete3                   
-#                   # then in python
-#                   from ete3 import NCBITaxa
-#                   ncbi = NCBITaxa()
-#                   ncbi.update_taxonomy_database()
-#
-# Usage: python ncbi_taxid_annotation.py [your fasta file]
-#
+'''
+# install ete3
+conda install -c bioconda ete3
+
+# download and update the NCBI Taxonomy database (run in python)
+from ete3 import NCBITaxa
+ncbi = NCBITaxa()
+ncbi.update_taxonomy_database()
+
+# run the script
+python ncbi_taxid_to_annotation.py ProteinA.fasta
+'''
 
 from ete3 import NCBITaxa
 ncbi = NCBITaxa()

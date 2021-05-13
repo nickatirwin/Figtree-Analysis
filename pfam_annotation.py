@@ -6,8 +6,6 @@
 #
 
 '''
-# To make this:
-
 # download the Pfam database
 wget ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz
 
@@ -20,6 +18,8 @@ hmmpress Pfam-A.hmm
 # annotate your proteins
 hmmscan -E 1e-5 --incE 1e-5 --domE 1e-5 --cpu 5 -o [fasta file].hmmscan Pfam-A.hmm [fasta file]
 
+# run the script
+python pfam_annotation.py proteinA.fasta proteinA.fasta.hmmscan
 '''
 
 # usage: python pfam_annotation.py [fasta file] [hmmscan file]
