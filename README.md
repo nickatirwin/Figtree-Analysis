@@ -6,7 +6,7 @@ A series of scripts for generating annotation files and manipulating fasta files
 
 These annotation files are useful for examining species trees, identifying orthologs, and cleaning datasets for phylogenomics. FigTree is a graphical tree viewer available at https://github.com/rambaut/figtree/releases.
 
-## Annotation scripts
+## Scripts
 
 ### remove_and_extract.py
 
