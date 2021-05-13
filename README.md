@@ -13,7 +13,14 @@ These annotation files are useful for examining species trees, identifying ortho
 This script allows one to remove or extract sequences from a fasta file based on leaf colouring in FigTree. E.g., Colour in contamination red and remove those sequences from the original fasta file.
 
 ```
+# remove red sequences (ff0000)
 python remove_and_extract.py proteinA.fasta proteinA.fasta.treefile.coloured ff0000
+
+# extract blue sequences (0000ff)
+python remove_and_extract.py proteinA.fasta proteinA.fasta.treefile.coloured NA 0000ff
+
+# remove red sequences (ff0000) and extract blue sequences (0000ff)
+python remove_and_extract.py proteinA.fasta proteinA.fasta.treefile.coloured ff0000 0000ff
 ```
 
 ### blast_annotation.py
