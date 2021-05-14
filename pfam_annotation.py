@@ -128,7 +128,7 @@ for s in pfam[1:]:
         current_seq = s.split('\t')[2].rsplit('_',1)[0]
 
 out = open(sys.argv[1]+'.pfam.annotation','w')
-out.write('seq\tdomain\n')
+out.write('seq\tprotein_domain\n')
 for s in fasta_seqs:
     try:
         out.write(s+'\t'+pfam_d[s]+'\n')
