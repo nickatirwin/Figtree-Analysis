@@ -37,6 +37,7 @@ for i in lines:
 #get the names corresponding to each of the taxa ids using grep
 taxon = []
 domain = []
+supergroup = []
 for i in taxaids:
     try:
         taxon.append(ncbi.get_taxid_translator([int(i)])[int(i)])
