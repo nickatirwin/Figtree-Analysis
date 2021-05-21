@@ -43,7 +43,7 @@ for line in blast:
         evalue_d[line.split('\t')[0].strip()] = line.split('\t')[-2].strip()
 
 # 3. Output annotation
-out = open(sys.argv[1]+'.annotation','w')
+out = open(sys.argv[1]+'.blast.annotation','w')
 out.write('seq\tprotein\tevalue\n')
 for s in list(seq_d.keys()):
     try:

@@ -24,7 +24,7 @@ import subprocess
 
 #load in the fasta file
 lines = open(sys.argv[1], 'r').readlines()
-output = open(sys.argv[1] + '.taxonomy_annotation', 'w')
+output = open(sys.argv[1] + '.taxonomy.annotation', 'w')
 otu = []
 
 #extract the headers (OTUs) and taxa ids
