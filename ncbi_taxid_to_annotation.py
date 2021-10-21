@@ -25,40 +25,44 @@ import subprocess
 #load in the fasta file
 lines = open(sys.argv[1], 'r').readlines()
 output = open(sys.argv[1] + '.taxonomy.annotation', 'w')
-otu = []
+otu_d = {}
 
 #extract the headers (OTUs) and taxa ids
-taxaids = []
 for i in lines:
     if i.startswith('>'):
-        taxaids.append(i.split('.')[0].strip('>').strip())
-        otu.append(i.strip('>').strip())
+        otu_d[i.strip('>').strip()] = [i.split('.')[0].strip('>').strip()]
 
 #get the names corresponding to each of the taxa ids using grep
-taxon = []
-domain = []
-supergroup = []
-for i in taxaids:
-    try:
-        taxon.append(ncbi.get_taxid_translator([int(i)])[int(i)])
-        if 2759 in ncbi.get_lineage(int(i)):
-            domain.append('Eukaryota')
-        elif 10239 in ncbi.get_lineage(int(i)):
-            domain.append('Virus')
-        elif 2 in ncbi.get_lineage(int(i)):
-            domain.append('Bacteria')
-        else:
-            domain.append('Archaea')
-        supergroup.append(str(ncbi.get_taxid_translator([ncbi.get_lineage(int(i))[3]])[ncbi.get_lineage(int(i))[3]]))
+for i in otu_d:
+    taxa = i.split('.')[0]
+    try: # add taxon name
+        otu_d[i].append(ncbi.get_taxid_translator([int(taxa)])[int(taxa)])
     except:
-        taxon.append(i)
-        domain.append(i)
-        supergroup.append(i)
+        otu_d[i].append('NA')
+    try: # add domain
+        otu_d[i].append(str(ncbi.get_taxid_translator([ncbi.get_lineage(int(taxa))[3]])[ncbi.get_lineage(int(taxa))[3]]))
+    except:
+        otu_d[i].append('NA')
+    try:
+        domain = 'NA'
+        if 2759 in ncbi.get_lineage(int(taxa)):
+            domain = 'Eukaryota'
+        elif 10239 in ncbi.get_lineage(int(taxa)):
+            domain = 'Virus'
+        elif 2 in ncbi.get_lineage(int(taxa)):
+            domain = 'Bacteria'
+        elif 2157 in ncbi.get_lineage(int(taxa)):
+            domain = 'Archaea'
+        else:
+            domain = 'Virus'
+        otu_d[i].append(domain)
+    except:
+        otu_d[i].append('NA')
+
 #output the results
 output.write('otu\ttaxaid\tspecies\tsupergroup\tdomain\n')
-n = 0
-while n < len(taxaids):
-    output.write(otu[n].strip('\n') + '\t' + taxaids[n] + '\t' + taxon[n].strip('\n') + '\t' + supergroup[n] + '\t' +  domain[n].strip() + '\n')
-    n += 1
-
+sep = '\t'
+for otu in otu_d:
+    output.write(otu+'\t'+sep.join(otu_d[otu])+'\n')
 output.close()
+
